@@ -6,7 +6,7 @@ Ansible playbook Example ::
 1: To build oci compute using ansible
 Pre-requisite :
        
-       * Ansible Control Node with oci ansible module and sdk installed
+       * Ansible Control Node with oci ansible module and sdk installed(https://github.com/shurabh/oci/blob/main/How-To.md)
        
        * oci_config file with 600 perm
        
