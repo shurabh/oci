@@ -18,5 +18,12 @@ Pre-requisite :
        key_file=<path to your private keyfile> 
       
       * oci_api_key.pem (It is private key can be downloaded from oci console)
-2: Create Roles
-     # ansible-galaxy init build_compute --offline
+2: Clone the Repo
+
+3: update values as per your infra in roles\compute-build\vars\main.yml
+
+4: Dry run :
+           ansible-playbook compute-build.yaml --check
+
+5: Run Playbook :
+           ansible-playbook compute-build.yaml

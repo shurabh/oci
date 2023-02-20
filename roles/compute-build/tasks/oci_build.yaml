@@ -1,0 +1,16 @@
+- name: Launch an instance
+  oci_instance:
+    availability_domain: "{{ instance_ad }}"
+    compartment_id: "{{ instance_compartment_ocid }}"
+    name: "{{ instance_name }}"
+    source_details:
+      source_type: image
+      image_id: "{{ instance_image_ocid }}"
+    shape: "{{ instance_shape }}"
+    vnic:
+        assign_public_ip: True
+        hostname_label: "{{ instance_hostname }}"
+        subnet_id: "{{ instance_subnet_ocid }}"
+    metadata:
+        ssh_authorized_keys: "{{ pub_key }}"
+  register: oci_vm_details

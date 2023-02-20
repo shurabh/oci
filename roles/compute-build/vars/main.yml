@@ -1,0 +1,10 @@
+---
+# vars file for build
+instance_ad: <<AD Details can be found here https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm>>
+instance_compartment_ocid: <<Compartment ocid can be found in oci console>>
+instance_name: <<VM Name>>
+instance_image_ocid: <<Image ocid can be found https://docs.oracle.com/en-us/iaas/images/ >>
+instance_shape: << Instance Shape https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm >> #VM.Standard.E2.1.Micro
+instance_hostname: <<VM Name>>
+instance_subnet_ocid: << subnet ocid can be found in oci console >>
+pub_key: <<your pub key for instance here >>

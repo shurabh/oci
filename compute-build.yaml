@@ -1,0 +1,13 @@
+---
+- name: Provision an OCI VM
+  hosts: localhost
+  become: yes
+
+  roles:
+    - compute-build
+
+- name: Print VM details
+  hosts: localhost
+  tasks:
+    - debug:
+        var: oci_vm_details
