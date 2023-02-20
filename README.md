@@ -3,10 +3,10 @@ oracle cloud infrastructure
 
 Ansible playbook Example ::
 
-1: To build oci compute using ansible
+1: To build oci compute using ansible(https://github.com/shurabh/oci/blob/main/How-To.md)
 Pre-requisite :
        
-       * Ansible Control Node with oci ansible module and sdk installed(https://github.com/shurabh/oci/blob/main/How-To.md)
+       * Ansible Control Node with oci ansible module and sdk installed
        
        * oci_config file with 600 perm
        
