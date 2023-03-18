@@ -1,0 +1,11 @@
+- name: Get OCI instance details
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get instance facts
+      oci_instance_facts:
+        compartment_id: "ocid1.compartment.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      register: result
+    - name: Display instance details
+      debug:
+        var: result.instances
