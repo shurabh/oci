@@ -1,0 +1,121 @@
+# Easy way to update tags
+---
+- name: Fetch Tags and update values
+  hosts: localhost
+  vars_prompt:
+    - name: instance_id
+      prompt: "Enter Instance ID  :"
+      private: no
+
+    - name: key1
+      prompt: "Enter key for sub :"
+      private: no
+    - name: value1
+      prompt: "Enter value for sub :"
+      private: no
+    - name: key2
+      prompt: "Enter key for opc:"
+      private: no
+    - name: value2
+      prompt: "Enter value for opc :"
+      private: no
+    - name: key3
+      prompt: "Enter key for costcenter:"
+      private: no
+    - name: value3
+      prompt: "Enter value for costcenter :"
+      private: no
+
+  tasks:
+    - name: Fetch existing tags for OCI compute instance
+      oci_compute_instance_facts:
+        instance_id: "{{ instance_id }}"
+      register: result
+    - name: Print instance details
+      debug:
+        msg: "fact of instance {{ result.instances[0].defined_tags }}"
+
+    - name: Save Stdout to File
+      copy:
+        content: "{{ result.instances[0].defined_tags }}"
+        dest: config.json
+    - block:
+        - name: find key and update value
+          command:  jq --arg key1 "{{ key1 }}" --arg value1 "{{ value1 }}" '.governance."{{ key1 }}" = $value1' config.json
+          register: result_data
+          when: key1|length != 0
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Print updated tags details
+          debug:
+            msg: "Tags are {{ result_data.stdout }}"
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Save Stdout to File
+          copy:
+            content: "{{ result_data.stdout }}"
+            dest: config.json
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+
+        - name: find key and update value
+          command:  jq --arg key2 "{{ key2 }}" --arg value2 "{{ value2 }}" '.governance."{{ key2 }}" = $value2' config.json
+          register: result_data
+          when: key2|length != 0
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Print updated tags details
+          debug:
+            msg: "Tags are {{ result_data.stdout }}"
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Save Stdout to File
+          copy:
+            content: "{{ result_data.stdout }}"
+            dest: config.json
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+
+        - name: find key and update value
+          command:  jq --arg key3 "{{ key3 }}" --arg value3 "{{ value3 }}" '.governance."{{ key3 }}" = $value3' config.json
+          register: result_data
+          when: key3|length != 0
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Print updated tags details
+          debug:
+            msg: "Tags are {{ result_data.stdout }}"
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+        - name: Save Stdout to File
+          copy:
+            content: "{{ result_data.stdout }}"
+            dest: config.json
+          tags:
+            - multiple_tags
+          ignore_errors: yes
+
+#update latest tag to compute resource
+    - name: Update Compute Instance Defined Tags
+      oci_compute_instance:
+        instance_id: "{{ instance_id }}"
+        defined_tags: "{{ lookup('file', 'config.json') | from_json }}"
+        state: present
+
+#Print Instance Tags after updating the Tags
+
+    - name: Fetch existing tags for OCI compute instance
+      oci_compute_instance_facts:
+        instance_id: "{{ instance_id }}"
+      register: result1
+    - name: Print instance details
+      debug:
+        msg: "latest tags applied on instance {{ result1.instances[0].defined_tags }}"
